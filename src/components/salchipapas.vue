@@ -194,12 +194,12 @@ const categorias = [
 ]
 
 const promociones = ref([
-  { id: 1, nombre: 'Burguer Clásica', imagen: '/img/s1.png', descripcion: 'Pan brioche, carne de res, queso americano, tocineta, vegetales frescos, papas fritas', precio: 21000 },
-  { id: 2, nombre: 'Broiler', imagen: '/img/s2.png', descripcion: 'Carne 100% res, mozzarella, tocineta caramelizada, vegetales, papa casco', precio: 26500 },
-  { id: 3, nombre: 'Perro Americano', imagen: '/img/s3.png', descripcion: 'Salchicha jumbo, cebolla crispy, salsas, papas ripiadas', precio: 23500 },
-  { id: 4, nombre: 'Combo Pareja', imagen: '/img/s4.png', descripcion: '2 hamburguesas, papas grandes, 2 bebidas', precio: 21000 },
-  { id: 5, nombre: 'Salchipollo', imagen: '/img/s5.png', descripcion: 'Salchichas, pollo frito, papas, queso rallado, salsas', precio: 30000 },
-  { id: 6, nombre: 'Hamburguesa Doble Carne', imagen: '/img/s6.png', descripcion: 'Doble carne, doble queso, cebolla caramelizada, salsa especial, bebida', precio: 35000 }
+  { id: 1, nombre: 'Bomba', imagen: '/img/s1.png', descripcion: 'Papas a la francesa bien crocantes, chorizo de parrilla, carne de res jugosa, pollo sazonado, lechuguita fresca, queso cheddar fundido, mostaza, kétchup y coronación real con huevos de codorniz.', precio: 21000 },
+  { id: 2, nombre: 'Criolla ', imagen: '/img/s2.png', descripcion: 'Papas doradas, salchicha ranchera con sabor a hogar, kétchup dulcecito y mayonesa cremosa.', precio: 26500 },
+  { id: 3, nombre: 'Especial', imagen: '/img/s3.png', descripcion: 'Papas doraditas, chorizo encendido, pollo ahumado, kétchup y mayonesa.', precio: 23500 },
+  { id: 4, nombre: 'Francesa Deluxe', imagen: '/img/s4.png', descripcion: 'Papas crocantes, cerdo crispy bien doradito, lluvia de queso cheddar y el toque fresco del cilantro.', precio: 21000 },
+  { id: 5, nombre: 'Criolla Mix', imagen: '/img/s5.png', descripcion: 'Papa criolla en cascos, combo brutal de pollo, res y cerdo, con guiso criollo', precio: 30000 },
+  { id: 6, nombre: 'Chori', imagen: '/img/s6.png', descripcion: 'Papota francesa, chorizo al punto, bañado con salsita de panela y cheddar derretido.', precio: 35000 }
   
 ])
 
