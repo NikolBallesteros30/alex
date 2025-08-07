@@ -194,23 +194,35 @@ const categorias = [
 ]
 
 const promociones = ref([
-  { id: 1, nombre: 'Burguer Clásica', imagen: '/img/e1.png', descripcion: 'Pan brioche, carne de res, queso americano, tocineta, vegetales frescos, papas fritas', precio: 21000 },
-  { id: 2, nombre: 'Broiler', imagen: '/img/e2.png', descripcion: 'Carne 100% res, mozzarella, tocineta caramelizada, vegetales, papa casco', precio: 26500 },
-  { id: 3, nombre: 'Perro Americano', imagen: '/img/e3.png', descripcion: 'Salchicha jumbo, cebolla crispy, salsas, papas ripiadas', precio: 23500 },
-  { id: 4, nombre: 'Combo Pareja', imagen: '/img/e4.png', descripcion: '2 hamburguesas, papas grandes, 2 bebidas', precio: 21000 },
-  { id: 5, nombre: 'Salchipollo', imagen: '/img/e5.png', descripcion: 'Salchichas, pollo frito, papas, queso rallado, salsas', precio: 30000 },
-  { id: 6, nombre: 'Hamburguesa Doble Carne', imagen: '/img/e6.png', descripcion: 'Doble carne, doble queso, cebolla caramelizada, salsa especial, bebida', precio: 35000 },
- 
+  { id: 1, nombre: 'Nuggets (11 uds)', imagen: '/img/e1.png', precio: 11000 },
+  { id: 2, nombre: 'Francesa Grande', imagen: '/img/e2.png', precio: 12000 },
+  { id: 3, nombre: 'Francesa Mediana', imagen: '/img/e3.png', precio: 9500 },
+  { id: 4, nombre: 'Francesa Pequeña', imagen: '/img/e4.png', precio: 8000 },
+  { id: 5, nombre: 'Postre Oreo', imagen: '/img/e5.png', precio: 15000 },
+  { id: 6, nombre: 'Malteada de Fresa', imagen: '/img/e6.png', precio: 18000 },
+  { id: 7, nombre: 'Helado Bom Bom Bum', imagen: '/img/e7.png', precio: 11000 },
+  { id: 8, nombre: 'Cono Maracuyá', imagen: '/img/e8.png', precio: 9500 },
+  { id: 9, nombre: 'Cono Chocovainilla', imagen: '/img/e9.png', precio: 9800 },
+  { id: 10, nombre: 'Malteada Café', imagen: '/img/e10.png', precio: 19000 },
+  { id: 11, nombre: 'Latte Juan Valdez', imagen: '/img/e11.png', precio: 15000 },
+  { id: 12, nombre: 'Cookie Chip', imagen: '/img/e12.png', precio: 6000 }
 ])
 
+
 const adicionales = ref([
-  { nombre: 'Tocineta', cantidad: 0, precio: 4000 },
-  { nombre: 'Lonjas de queso', cantidad: 0, precio: 2500 },
-  { nombre: 'Carne de hamburguesa', cantidad: 0, precio: 9000 },
-  { nombre: 'Pechuga apanada', cantidad: 0, precio: 8000 },
-  { nombre: 'Huevo', cantidad: 0, precio: 1000 },
-  { nombre: 'Vegetales', cantidad: 0, precio: 800 },
+  { nombre: 'Tocineta crocante', cantidad: 0, precio: 2500 },     
+  { nombre: 'Queso cheddar fundido', cantidad: 0, precio: 2000 },     
+  { nombre: 'Chispas de chocolate', cantidad: 0, precio: 1000 },  
+  { nombre: 'Galleta triturada', cantidad: 0, precio: 1200 },      
+  { nombre: 'Arequipe', cantidad: 0, precio: 1500 },              
+  { nombre: 'Malvaviscos', cantidad: 0, precio: 800 },             
+  { nombre: 'Extra de nuggets (3 uds)', cantidad: 0, precio: 3500 }, 
+  { nombre: 'Extra de papas pequeñas', cantidad: 0, precio: 2800 },  
+  { nombre: 'Salsa tártara', cantidad: 0, precio: 500 },           
+  { nombre: 'Shot de café extra', cantidad: 0, precio: 2000 },     
+  { nombre: 'Fruta (fresa o maracuyá)', cantidad: 0, precio: 1500 } 
 ])
+
 
 function navegarACategoria(ruta) {
   router.push(ruta)
