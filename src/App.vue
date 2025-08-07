@@ -1,292 +1,194 @@
 <template>
-  <div class="pagina-promos q-px-xl q-py-xl">
-    <!-- Categorías centradas y estilizadas -->
-    <div class="categorias-section q-mb-xl">
-      <div class="titulo-seccion q-mb-lg text-center">
-        <q-icon name="restaurant_menu" size="28px" class="q-mr-sm" color="brown-8" />
-        <span class="titulo-texto">Nuestro menú</span>
-      </div>
-      
-      <div class="categorias-grid">
-        <q-card
-          v-for="item in categorias"
-          :key="item.label"
-          class="categoria-card cursor-pointer"
-          @click="navegarACategoria(item.to)"
-          flat
-        >
-          <div class="categoria-img-container">
-            <q-img :src="item.img" class="categoria-img" />
-            <div class="categoria-overlay">
-              <q-icon name="arrow_forward" color="white" size="md" />
+  <q-layout view="hHh lpR fFf">
+    <!-- HEADER -->
+    <q-header elevated class="bg-burgundy text-white" :style="headerHeight">
+      <!-- Fila superior -->
+      <q-toolbar class="q-px-md q-py-md flex items-center justify-center" :style="topToolbarHeight">
+        <div class="full-width flex items-center justify-between" style="max-width: 1200px;">
+          <!-- Logo -->
+          <div class="row items-center q-gutter-md">
+            <q-toolbar-title class="cursor-pointer" @click="$router.push('/')">
+              <img 
+                src="/img/logo.png" 
+                alt="Logo Roll & Go" 
+                :style="logoStyle"
+              />
+            </q-toolbar-title>
+
+            <!-- Botones de navegación -->
+            <div class="gt-sm">
+              <q-btn
+                flat
+                label="Ir al menú"
+                class="text-white header-btn q-mr-md"
+                @click="irAMenu"
+              />
+              <q-btn flat label="Restaurantes" class="text-white header-btn" />
+            </div>
+            
+            <!-- Botón "Ir al menú" para móvil -->
+            <div class="lt-md">
+              <q-btn
+                flat
+                :label="$q.screen.xs ? 'Menú' : 'Ir al menú'"
+                class="text-white header-btn"
+                @click="irAMenu"
+              />
             </div>
           </div>
-          <div class="categoria-boton">
-            {{ item.label }}
-          </div>
-        </q-card>
-      </div>
-    </div>
 
-    <!-- Grid de promociones -->
-    <div class="promociones-grid">
-      <div
-        class="col-xs-12 col-sm-6 col-md-4"
-        v-for="promo in promociones"
-        :key="promo.id"
-      >
-        <q-card class="promo-card cursor-pointer" @click="abrirModal(promo)">
-          <div class="promo-img-container">
-            <q-img
-              :src="promo.imagen"
-              alt="Imagen de promoción"
-              class="promo-img"
-              fit="cover"
-            />
-            <div class="promo-overlay">
-              <q-icon name="visibility" color="white" size="md" />
-            </div>
-          </div>
-          <q-card-section class="q-pa-sm">
-            <div class="promo-nombre">{{ promo.nombre }}</div>
-            <div class="promo-precio">{{ formatPrecio(promo.precio) }}</div>
-          </q-card-section>
-        </q-card>
-      </div>
-    </div>
+          <!-- Buscador -->
+          <q-input
+            v-model="search"
+            rounded
+            dense
+            outlined
+            debounce="300"
+            placeholder="Buscar"
+            class="search-bar bg-white text-dark"
+            :style="searchBarStyle"
+          >
+            <template #prepend>
+              <q-icon name="search" color="grey-6" />
+            </template>
+          </q-input>
 
-    <!-- Modal de producto -->
-    <q-dialog v-model="modalAbierto" persistent transition-show="scale" transition-hide="scale">
-      <q-card class="modal-card text-dark">
-        <q-card-section class="row items-center justify-between modal-header">
-          <div class="text-h6">{{ promocionSeleccionada?.nombre }}</div>
-          <q-btn icon="close" flat round dense @click="modalAbierto = false" />
+          <!-- Iconos a la derecha -->
+          <div class="row items-center q-gutter-sm">
+            <q-btn flat dense class="text-white header-lang-btn">
+              <q-avatar :size="avatarSize" class="q-mr-xs">
+                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjRkZEQjAwIi8+CjxyZWN0IHk9IjgiIHdpZHRoPSIyNCIgaGVpZ2h0PSI4IiBmaWxsPSIjMDA3M0ZGIi8+CjxyZWN0IHk9IjE2IiB3aWR0aD0iMjQiIGhlaWdodD0iOCIgZmlsbD0iI0ZGMDAwMCIvPgo8L3N2Zz4K" alt="Colombia flag">
+              </q-avatar>
+              <span :class="{ 'gt-xs': $q.screen.xs }">ES</span>
+              <q-icon name="expand_more" :size="iconSize" class="q-ml-xs" />
+            </q-btn>
+          </div>
+        </div>
+      </q-toolbar>
+
+      <!-- Fila inferior -->
+      <div class="bg-cream text-dark flex items-center justify-center" :style="bottomBarHeight">
+        <div class="q-px-md row items-center justify-start q-gutter-md" style="max-width: 1200px; width: 100%;">
+          <q-btn 
+            flat 
+            icon="login" 
+            :label="$q.screen.gt.xs ? 'Inicia tu orden' : ''" 
+            class="text-dark bottom-bar-btn" 
+          />
+          <q-btn 
+            flat 
+            icon="local_shipping" 
+            :label="$q.screen.gt.xs ? 'Domicilio' : ''" 
+            class="text-dark bottom-bar-btn" 
+          />
+        </div>
+      </div>
+    </q-header>
+
+    <!-- Contenido de página -->
+    <q-page-container class="q-pa-none">
+      <router-view />
+    </q-page-container>
+
+    <!-- Modal del carrito -->
+    <q-dialog v-model="mostrarCarrito" persistent>
+      <q-card class="q-pa-md" :style="carritoModalStyle">
+        <q-card-section>
+          <div class="text-h6">Tu carrito</div>
         </q-card-section>
 
-        <q-img :src="promocionSeleccionada?.imagen" alt="Imagen" class="modal-img" fit="cover" />
         <q-separator />
 
         <q-card-section>
-          <div class="text-subtitle1 text-bold">{{ promocionSeleccionada?.nombre }}</div>
-          <div class="text-body2 q-mt-sm">{{ promocionSeleccionada?.descripcion }}</div>
-          <div class="modal-total text-h6 q-mt-md">Total: {{ precioTotal() }}</div>
-        </q-card-section>
-
-        <q-card-section>
-          <div class="text-subtitle2 text-bold q-mb-sm">¿Desea adicionar algo?</div>
-          <q-separator class="q-mb-md" color="grey-4" />
-          <div
-            v-for="(item, index) in adicionales"
-            :key="index"
-            class="row items-center justify-between q-pa-sm q-mb-sm bg-grey-2 rounded-borders shadow-1"
-          >
-            <div>
-              {{ item.nombre }}
-              <span class="text-positive text-caption">(+{{ formatPrecio(item.precio) }})</span>
-            </div>
-            <div class="row items-center">
-              <q-btn icon="remove" flat round @click="item.cantidad > 0 && item.cantidad--" />
-              <div class="q-mx-sm text-weight-medium">{{ item.cantidad }}</div>
-              <q-btn icon="add" flat round @click="item.cantidad++" />
-            </div>
-          </div>
-        </q-card-section>
-
-        <q-card-section>
-          <div class="text-subtitle2 text-bold q-mb-xs">Especificaciones adicionales</div>
-          <q-input
-            v-model="especificaciones"
-            filled
-            type="textarea"
-            placeholder="temperatura de bebida,si desea retirar algun ingrediente, etc."
-            autogrow
-            dense
-          />
-        </q-card-section>
-
-        <q-card-actions align="center" class="q-mt-md">
-          <q-btn round :style="{ backgroundColor: '#600000', color: 'white' }" icon="shopping_cart" size="lg" @click="agregarAlCarrito" />
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
-
-    <!-- Modal de carrito -->
-    <q-dialog v-model="carritoAbierto" persistent transition-show="fade" transition-hide="fade">
-      <q-card class="modal-carrito">
-        <q-card-section>
-          <div class="text-h6 text-center text-primary q-mb-md">🛒 Tu carrito</div>
-
-          <div v-if="carrito.items.length === 0" class="text-center text-grey q-mt-md">
-            No has agregado productos todavía.
-          </div>
-
-          <div v-for="(item, i) in carrito.items" :key="i" class="item-carrito">
-            <div class="row items-center justify-between">
-              <div class="text-bold text-dark">{{ item.nombre }}</div>
-              <div>
-                <q-btn 
-                  icon="edit" 
-                  flat 
-                  round 
-                  dense 
-                  color="primary" 
-                  @click="editarItem(i)"
-                  class="q-mr-sm"
-                />
-                <q-btn 
-                  icon="delete" 
-                  flat 
-                  round 
-                  dense 
-                  color="negative" 
-                  @click="eliminarItem(i)"
-                />
+          <div v-if="carrito.items.length === 0" class="text-grey">El carrito está vacío.</div>
+          <div v-else>
+            <div v-for="(item, i) in carrito.items" :key="i" class="q-mb-md">
+              <div class="text-bold">{{ item.nombre }}</div>
+              <div class="text-caption text-grey">
+                {{ item.especificaciones }}
               </div>
+              <div v-if="item.adicionales.length > 0" class="text-caption q-mt-xs">
+                <span v-for="(a, j) in item.adicionales" :key="j">
+                  • {{ a.nombre }} x{{ a.cantidad }}<br />
+                </span>
+              </div>
+              <div class="text-subtitle2 q-mt-xs">Total: {{ formatPrecio(item.total) }}</div>
+              <q-separator class="q-my-sm" />
             </div>
-            <div class="text-subtitle2 text-positive">Total: {{ formatPrecio(item.total) }}</div>
-
-            <div v-if="item.adicionales.length > 0" class="text-caption q-mt-xs">
-              <q-icon name="add_circle" color="green" size="14px" class="q-mr-xs" />
-              <strong>Adicionales:</strong>
-              <ul class="q-ml-md q-mt-xs">
-                <li v-for="a in item.adicionales" :key="a.nombre">
-                  {{ a.nombre }} x{{ a.cantidad }} (+{{ formatPrecio(a.precio * a.cantidad) }})
-                </li>
-              </ul>
-            </div>
-
-            <div v-if="item.especificaciones" class="text-caption text-grey-8 q-mt-xs">
-              <q-icon name="edit_note" size="16px" class="q-mr-xs" />
-              {{ item.especificaciones }}
-            </div>
-
-            <q-separator class="q-my-sm" />
           </div>
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn flat label="Cerrar" class="btn-cerrar-carrito" @click="carritoAbierto = false" />
+          <q-btn flat label="Cerrar" color="primary" v-close-popup />
         </q-card-actions>
       </q-card>
     </q-dialog>
-  </div>
+  </q-layout>
 </template>
 
 <script setup>
-import { ref, inject } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, reactive, provide, computed } from 'vue'
+import { useQuasar } from 'quasar'
 
-const router = useRouter()
+const $q = useQuasar()
+const search = ref('')
+const mostrarCarrito = ref(false)
 
-const modalAbierto = ref(false)
-const promocionSeleccionada = ref(null)
-const especificaciones = ref('')
-const carritoAbierto = ref(false)
-const editandoIndex = ref(null)
-
+import { inject } from 'vue'
 const carrito = inject('carrito')
 
-const categorias = [
-  { label: 'Hamburguesas', to: '/hamburguesas', img: '/img/icono1.png' },
-  { label: 'Perros', to: '/perros', img: '/img/icono2.png' },
-  { label: 'Salchipapas', to: '/salchipapas', img: '/img/icono3.png' },
-  { label: 'Bebidas', to: '/bebidas', img: '/img/icono4.png' },
-]
+// Computed properties para estilos responsivos
+const headerHeight = computed(() => {
+  if ($q.screen.xs) return 'height: 120px'
+  if ($q.screen.sm) return 'height: 140px'
+  return 'height: 160px'
+})
 
-const promociones = ref([
-  { id: 1, nombre: 'Nuggets (11 uds)', imagen: '/img/e1.png', precio: 11000 },
-  { id: 2, nombre: 'Francesa Grande', imagen: '/img/e2.png', precio: 12000 },
-  { id: 3, nombre: 'Francesa Mediana', imagen: '/img/e3.png', precio: 9500 },
-  { id: 4, nombre: 'Francesa Pequeña', imagen: '/img/e4.png', precio: 8000 },
-  { id: 5, nombre: 'Postre Oreo', imagen: '/img/e5.png', precio: 15000 },
-  { id: 6, nombre: 'Malteada de Fresa', imagen: '/img/e6.png', precio: 18000 },
-  { id: 7, nombre: 'Helado Bom Bom Bum', imagen: '/img/e7.png', precio: 11000 },
-  { id: 8, nombre: 'Cono Maracuyá', imagen: '/img/e8.png', precio: 9500 },
-  { id: 9, nombre: 'Cono Chocovainilla', imagen: '/img/e9.png', precio: 9800 },
-  { id: 10, nombre: 'Malteada Café', imagen: '/img/e10.png', precio: 19000 },
-  { id: 11, nombre: 'Latte Juan Valdez', imagen: '/img/e11.png', precio: 15000 },
-  { id: 12, nombre: 'Cookie Chip', imagen: '/img/e12.png', precio: 6000 }
-])
+const topToolbarHeight = computed(() => {
+  if ($q.screen.xs) return 'height: 60px'
+  if ($q.screen.sm) return 'height: 70px'
+  return 'height: 80px'
+})
 
+const bottomBarHeight = computed(() => {
+  if ($q.screen.xs) return 'height: 60px'
+  if ($q.screen.sm) return 'height: 70px'
+  return 'height: 80px'
+})
 
-const adicionales = ref([
-  { nombre: 'Galleta triturada', cantidad: 0, precio: 1200 },      
-  { nombre: 'Arequipe', cantidad: 0, precio: 1500 },              
-  { nombre: 'Malvaviscos', cantidad: 0, precio: 800 },                      
-  { nombre: 'Shot de café extra', cantidad: 0, precio: 2000 },     
-  { nombre: 'Fruta (fresa o maracuyá)', cantidad: 0, precio: 1500 } 
-])
+const logoStyle = computed(() => {
+  if ($q.screen.xs) return 'height: 80px; width: 90px; margin-top: 15px;'
+  if ($q.screen.sm) return 'height: 100px; width: 115px; margin-top: 25px;'
+  return 'height: 130px; width: 150px; margin-top: 45px;'
+})
 
+const searchBarStyle = computed(() => {
+  if ($q.screen.xs) return 'width: 120px;'
+  if ($q.screen.sm) return 'width: 180px;'
+  if ($q.screen.md) return 'width: 250px;'
+  return 'width: 300px;'
+})
 
-function navegarACategoria(ruta) {
-  router.push(ruta)
-}
+const avatarSize = computed(() => {
+  return $q.screen.xs ? '16px' : '20px'
+})
 
-function abrirModal(promo, index = null) {
-  promocionSeleccionada.value = promo
-  editandoIndex.value = index
-  modalAbierto.value = true
-  
-  // Resetear adicionales
-  adicionales.value.forEach(a => a.cantidad = 0)
-  especificaciones.value = ''
-  
-  // Si estamos editando, cargar los datos existentes
-  if (index !== null && carrito.items[index]) {
-    const item = carrito.items[index]
-    especificaciones.value = item.especificaciones || ''
-    
-    // Cargar adicionales
-    item.adicionales.forEach(adicional => {
-      const addIndex = adicionales.value.findIndex(a => a.nombre === adicional.nombre)
-      if (addIndex !== -1) {
-        adicionales.value[addIndex].cantidad = adicional.cantidad
-      }
-    })
+const iconSize = computed(() => {
+  return $q.screen.xs ? '14px' : '16px'
+})
+
+const carritoModalStyle = computed(() => {
+  if ($q.screen.xs) return 'min-width: 280px; max-width: 90vw;'
+  return 'min-width: 300px; max-width: 600px;'
+})
+
+function irAMenu() {
+  const el = document.getElementById('categorias')
+  if (el) {
+    const offset = $q.screen.xs ? 120 : $q.screen.sm ? 140 : 200
+    const topPos = el.getBoundingClientRect().top + window.pageYOffset - offset
+    window.scrollTo({ top: topPos, behavior: 'smooth' })
   }
-}
-
-function agregarAlCarrito() {
-  if (!promocionSeleccionada.value) return
-
-  const adicionalesSeleccionados = adicionales.value.filter(a => a.cantidad > 0)
-
-  const total = promocionSeleccionada.value.precio +
-    adicionalesSeleccionados.reduce((sum, a) => sum + a.precio * a.cantidad, 0)
-
-  const nuevoItem = {
-    ...promocionSeleccionada.value,
-    adicionales: adicionalesSeleccionados,
-    especificaciones: especificaciones.value,
-    total
-  }
-
-  if (editandoIndex.value !== null) {
-    // Reemplazar el item existente
-    carrito.items[editandoIndex.value] = nuevoItem
-  } else {
-    // Agregar nuevo item
-    carrito.items.push(nuevoItem)
-  }
-
-  modalAbierto.value = false
-  editandoIndex.value = null
-}
-
-function editarItem(index) {
-  const item = carrito.items[index]
-  const promo = promociones.value.find(p => p.id === item.id) || item
-  abrirModal(promo, index)
-}
-
-function eliminarItem(index) {
-  carrito.items.splice(index, 1)
-}
-
-function precioTotal() {
-  const base = promocionSeleccionada.value?.precio || 0
-  const adicionalesTotal = adicionales.value.reduce((sum, item) => sum + item.cantidad * item.precio, 0)
-  return formatPrecio(base + adicionalesTotal)
 }
 
 function formatPrecio(valor) {
@@ -295,303 +197,87 @@ function formatPrecio(valor) {
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&family=Fredoka+One:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Open+Sans:wght@400;600;700&display=swap');
 
-.pagina-promos {
-  background: hsl(36, 26%, 96%);;
-  border-radius: 12px;
-  min-height: 100vh;
+.bg-burgundy {
+  background-color: #4b0b0b;
+}
+.bg-cream {
+  background-color: #fff1d6;
+}
+.bg-red {
+  background-color: #ff5c5c;
 }
 
-/* SECCIÓN DE CATEGORÍAS */
-.categorias-section {
-  background-color: white;
-  padding: 40px 20px;
-  border-radius: 16px;
-  margin-bottom: 40px;
-}
-
-.titulo-seccion {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 30px;
-}
-
-.titulo-texto {
+.search-bar {
+  border-radius: 25px;
   font-family: 'Open Sans', sans-serif;
-  font-size: 28px;
-  font-weight: 800;
-  color: #5D4E37;
-  letter-spacing: -0.5px;
 }
 
-.categorias-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 20px;
-  max-width: 1000px;
-  margin: 0 auto;
+.search-bar .q-field__control {
+  border-radius: 25px;
 }
 
-.categoria-card {
-  background: transparent;
-  padding: 20px;
-  text-align: center;
-  transition: all 0.3s ease;
-  min-height: 120px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.categoria-card:hover {
-  transform: translateY(-5px);
-}
-
-.categoria-img-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 12px;
-  position: relative;
-}
-
-.categoria-img {
-  width: 60px;
-  height: 60px;
-  object-fit: contain;
-  transition: transform 0.3s ease;
-}
-
-.categoria-card:hover .categoria-img {
-  transform: scale(1.1);
-}
-
-.categoria-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(96, 0, 0, 0.8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  border-radius: 50%;
-}
-
-.categoria-card:hover .categoria-overlay {
-  opacity: 1;
-}
-
-.categoria-boton {
-  background: transparent;
-  color: #5D4E37;
+/* Header buttons styling */
+.header-btn {
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;
   font-weight: 600;
-  text-transform: lowercase;
-  text-align: center;
-  line-height: 1.2;
-  transition: all 0.3s ease;
+  text-transform: none;
+  letter-spacing: 0.5px;
 }
 
-.categoria-card:hover .categoria-boton {
-  color: #8B4513;
-  transform: scale(1.05);
+.header-icon-btn {
+  font-family: 'Open Sans', sans-serif;
 }
 
-/* PROMOCIONES */
-.promo-card {
-  max-width: 400px;
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  background: white;
-}
-
-.promo-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-}
-
-.promo-nombre {
-  font-size: 17px;
-  font-weight: bold;
-  color: #600000;
-}
-
-.promo-precio {
-  font-size: 15px;
-  color: #600000;
-  font-weight: 600;
-  margin-top: 4px;
-}
-
-.promo-img-container {
-  position: relative;
-  height: 300px;
-  overflow: hidden;
-}
-
-.promo-img {
-  height: 300px;
-  width: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.promo-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(96, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.promo-card:hover .promo-overlay {
-  opacity: 1;
-}
-
-.promociones-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 40px 32px;
-  max-width: 1300px;
-  margin: 0 auto;
-}
-
-.modal-card {
-  border-radius: 16px;
-  max-width: 700px;
-  width: 100%;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-  animation: fadeInModal 0.3s ease-in-out;
-  background: #fff;
-}
-
-.modal-header {
-  background: #f8f8f8;
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.modal-img {
-  border-bottom: 4px solid #600000;
-}
-
-.modal-total {
-  color: #600000;
-  font-weight: bold;
-}
-
-.text-subtitle2 {
+.header-lang-btn {
+  font-family: 'Open Sans', sans-serif;
   font-size: 14px;
+  font-weight: 600;
+  text-transform: none;
 }
 
-.rounded-borders {
-  border-radius: 8px;
+/* Bottom bar buttons */
+.bottom-bar-btn {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0.3px;
 }
 
-.modal-carrito {
-  max-width: 500px;
-  width: 100%;
-  background: #fff;
-  border-radius: 16px;
-  padding: 24px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-  animation: fadeInModal 0.3s ease;
+.bottom-bar-btn-active {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: 0.3px;
 }
 
-.modal-carrito h6 {
-  font-size: 20px;
-  font-weight: bold;
-  color: #600000;
-  margin-bottom: 16px;
+.btn-carrito {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
 }
 
-.item-carrito {
-  border-bottom: 1px solid #ddd;
-  padding: 12px 0;
-}
-
-.item-carrito:last-child {
-  border-bottom: none;
-}
-
-.item-carrito strong {
-  font-size: 16px;
-  color: #333;
-}
-
-.item-carrito span {
-  display: block;
-  margin-top: 4px;
-  font-size: 15px;
-  color: #444;
-}
-
-.btn-cerrar-carrito {
-  color: #600000;
-  font-weight: bold;
-  margin-top: 20px;
-  text-align: right;
-  cursor: pointer;
-  transition: color 0.3s ease;
-}
-
-.btn-cerrar-carrito:hover {
-  color: #a00000;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .categorias-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
+/* Responsive adjustments */
+@media (max-width: 599px) {
+  .header-btn, .header-lang-btn {
+    font-size: 12px;
+    padding: 4px 8px;
   }
   
-  .promociones-grid {
-    grid-template-columns: repeat(1, 1fr);
-    gap: 20px;
-  }
-  
-  .titulo-texto {
-    font-size: 24px;
-  }
-  
-  .categoria-img {
-    width: 50px;
-    height: 50px;
+  .bottom-bar-btn {
+    font-size: 12px;
+    min-width: 60px;
   }
 }
 
-@media (max-width: 480px) {
-  .categorias-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@keyframes fadeInModal {
-  from {
-    transform: scale(0.9);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
+@media (min-width: 600px) and (max-width: 1023px) {
+  .header-btn, .header-lang-btn {
+    font-size: 13px;
   }
 }
 </style>
