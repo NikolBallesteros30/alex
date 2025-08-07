@@ -98,7 +98,7 @@
             v-model="especificaciones"
             filled
             type="textarea"
-            placeholder="Ej: Sin cebolla, extra salsa, etc."
+            placeholder="temperatura de bebida,si desea retirar algun ingrediente, etc."
             autogrow
             dense
           />
@@ -210,15 +210,9 @@ const promociones = ref([
 
 
 const adicionales = ref([
-  { nombre: 'Tocineta crocante', cantidad: 0, precio: 2500 },     
-  { nombre: 'Queso cheddar fundido', cantidad: 0, precio: 2000 },     
-  { nombre: 'Chispas de chocolate', cantidad: 0, precio: 1000 },  
   { nombre: 'Galleta triturada', cantidad: 0, precio: 1200 },      
   { nombre: 'Arequipe', cantidad: 0, precio: 1500 },              
-  { nombre: 'Malvaviscos', cantidad: 0, precio: 800 },             
-  { nombre: 'Extra de nuggets (3 uds)', cantidad: 0, precio: 3500 }, 
-  { nombre: 'Extra de papas pequeñas', cantidad: 0, precio: 2800 },  
-  { nombre: 'Salsa tártara', cantidad: 0, precio: 500 },           
+  { nombre: 'Malvaviscos', cantidad: 0, precio: 800 },                      
   { nombre: 'Shot de café extra', cantidad: 0, precio: 2000 },     
   { nombre: 'Fruta (fresa o maracuyá)', cantidad: 0, precio: 1500 } 
 ])
