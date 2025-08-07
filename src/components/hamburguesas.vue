@@ -194,16 +194,17 @@ const categorias = [
 ]
 
 const promociones = ref([
-  { id: 1, nombre: 'Burguer Clásica', imagen: '/img/h1.png', descripcion: 'Pan brioche, carne de res, queso americano, tocineta, vegetales frescos, papas fritas', precio: 21000 },
-  { id: 2, nombre: 'Broiler', imagen: '/img/h2.png', descripcion: 'Carne 100% res, mozzarella, tocineta caramelizada, vegetales, papa casco', precio: 26500 },
-  { id: 3, nombre: 'Perro Americano', imagen: '/img/h3.png', descripcion: 'Salchicha jumbo, cebolla crispy, salsas, papas ripiadas', precio: 23500 },
-  { id: 4, nombre: 'Combo Pareja', imagen: '/img/h4.png', descripcion: '2 hamburguesas, papas grandes, 2 bebidas', precio: 21000 },
-  { id: 5, nombre: 'Salchipollo', imagen: '/img/h5.png', descripcion: 'Salchichas, pollo frito, papas, queso rallado, salsas', precio: 30000 },
-  { id: 6, nombre: 'Hamburguesa Doble Carne', imagen: '/img/h6.png', descripcion: 'Doble carne, doble queso, cebolla caramelizada, salsa especial, bebida', precio: 35000 },
-  { id: 7, nombre: 'Hamburguesa Doble Carne', imagen: '/img/h7.jpg', descripcion: 'Doble carne, doble queso, cebolla caramelizada, salsa especial, bebida', precio: 35000 },
-  { id: 8, nombre: 'Hamburguesa Doble Carne', imagen: '/img/h8.png', descripcion: 'Doble carne, doble queso, cebolla caramelizada, salsa especial, bebida', precio: 35000 },
-  { id: 9, nombre: 'Hamburguesa Doble Carne', imagen: '/img/h9.png', descripcion: 'Doble carne, doble queso, cebolla caramelizada, salsa especial, bebida', precio: 35000 }
+  { id: 1, nombre: 'Burguer Clásica', imagen: '/img/h1.png', descripcion: 'Pan brioche, carne de res, queso americano, tocineta, vegetales frescos', precio: 23000 },
+  { id: 2, nombre: 'Broiler', imagen: '/img/h2.png', descripcion: 'Carne 100% res, mozzarella, tocineta caramelizada, vegetales', precio: 28000 },
+  { id: 3, nombre: 'Burguer Pork', imagen: '/img/h3.png', descripcion: 'Salchicha jumbo, cebolla crispy, salsas', precio: 25000 },
+  { id: 4, nombre: 'Burguer Breakfast', imagen: '/img/h4.png', descripcion: 'Pan integral, carne de res, queso chedar fundido, huevo frito, deliciosa tocineta ahumada y salsas de la casa', precio: 24000 },
+  { id: 5, nombre: 'Burguer KP', imagen: '/img/h5.png', descripcion: 'Pan brioche, pechuga apanada, tocineta ahumada, jamón, queso americano, vegetales frescos', precio: 32000 },
+  { id: 6, nombre: 'Burguer Triple Carne', imagen: '/img/h6.png', descripcion: 'Pan brioche, triple carne de res, queso chedar, vegetales frescos', precio: 38000 },
+  { id: 7, nombre: 'Burguer Vegan', imagen: '/img/h7.jpg', descripcion: 'Pan brioche, carne vegana, tofu, vegetales frescos', precio: 31000 },
+  { id: 8, nombre: 'Burguer Crispy', imagen: '/img/h8.png', descripcion: 'Pan brioche doradito, carne de res, pollo desmechado, queso chedar, tocineta crispy, vegetales frescos', precio: 58000 },
+  { id: 9, nombre: 'Burguer Trifásica', imagen: '/img/h9.png', descripcion: 'Pan brioche, doble carne de res, pollo apanado, doble queso chedar, vegetales frescos', precio: 40000 }
 ])
+
 
 const adicionales = ref([
   { nombre: 'Tocineta', cantidad: 0, precio: 4000 },
