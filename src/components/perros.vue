@@ -194,12 +194,12 @@ const categorias = [
 ]
 
 const promociones = ref([
-  { id: 1, nombre: 'Burguer Clásica', imagen: '/img/p1.png', descripcion: 'Pan brioche, carne de res, queso americano, tocineta, vegetales frescos, papas fritas', precio: 21000 },
-  { id: 2, nombre: 'Broiler', imagen: '/img/p2.png', descripcion: 'Carne 100% res, mozzarella, tocineta caramelizada, vegetales, papa casco', precio: 26500 },
-  { id: 3, nombre: 'Perro Americano', imagen: '/img/p3.png', descripcion: 'Salchicha jumbo, cebolla crispy, salsas, papas ripiadas', precio: 23500 },
-  { id: 4, nombre: 'Combo Pareja', imagen: '/img/p4.png', descripcion: '2 hamburguesas, papas grandes, 2 bebidas', precio: 21000 },
-  { id: 5, nombre: 'Salchipollo', imagen: '/img/p5.png', descripcion: 'Salchichas, pollo frito, papas, queso rallado, salsas', precio: 30000 },
-  { id: 6, nombre: 'Hamburguesa Doble Carne', imagen: '/img/p6.jpeg', descripcion: 'Doble carne, doble queso, cebolla caramelizada, salsa especial, bebida', precio: 35000 },
+  { id: 1, nombre: 'Clásico Yankee', imagen: '/img/p1.png', descripcion: 'Salchicha americana jugosa al estilo tradicional, acompañada de una sabrosa capa de carne molida de res, bañada en el clásico dúo de ketchup y mostaza amarilla.', precio: 21000 },
+  { id: 2, nombre: 'Crocante Ranchero', imagen: '/img/p2.png', descripcion: 'Salchicha ranchera con ese toque ahumado, coronada con chicharrón crispy y aros de cebolla apanados que revientan de sabor. Todo abrazado por un toque de mostaza.', precio: 26500 },
+  { id: 3, nombre: 'Green Power', imagen: '/img/p3.png', descripcion: 'Salchicha vegana con corazón verde, acompañada de tomatillo fresco, aguacate cremoso, raíces chinas crocantes y un delicado brochazo de mayonesa.', precio: 23500 },
+  { id: 4, nombre: 'Crunchy Gringo', imagen: '/img/p4.png', descripcion: 'Salchicha americana y carne molida de res bien sazonada, combinadas con mini chips crocantes, ketchup y granitos de maíz tierno que explotan dulzura.', precio: 21000 },
+  { id: 5, nombre: 'Pico Ranchero', imagen: '/img/p5.png', descripcion: 'Salchicha ranchera llena de sabor, acompañada con un pico de gallo fresco y vibrante, todo envuelto en un toque de mayonesa cremosa.', precio: 30000 },
+  { id: 6, nombre: 'Clásico', imagen: '/img/p6.jpeg', descripcion: 'La infaltable salchicha americana acompañada del combo eterno: ketchup y mostaza.', precio: 35000 },
   
 ])
 
