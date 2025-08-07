@@ -98,7 +98,7 @@
             v-model="especificaciones"
             filled
             type="textarea"
-            placeholder="Ej: Sin cebolla, extra salsa, etc."
+            placeholder="Ej: bebida al clima, bebida fria, etc."
             autogrow
             dense
           />
@@ -194,27 +194,24 @@ const categorias = [
 ]
 
 const promociones = ref([
-  { id: 1, nombre: 'Burguer Clásica', imagen: '/img/b1.png', descripcion: 'Pan brioche, carne de res, queso americano, tocineta, vegetales frescos, papas fritas', precio: 21000 },
-  { id: 2, nombre: 'Broiler', imagen: '/img/b2.png', descripcion: 'Carne 100% res, mozzarella, tocineta caramelizada, vegetales, papa casco', precio: 26500 },
-  { id: 3, nombre: 'Perro Americano', imagen: '/img/b3.png', descripcion: 'Salchicha jumbo, cebolla crispy, salsas, papas ripiadas', precio: 23500 },
-  { id: 4, nombre: 'Combo Pareja', imagen: '/img/b4.png', descripcion: '2 hamburguesas, papas grandes, 2 bebidas', precio: 21000 },
-  { id: 5, nombre: 'Salchipollo', imagen: '/img/b5.png', descripcion: 'Salchichas, pollo frito, papas, queso rallado, salsas', precio: 30000 },
-  { id: 6, nombre: 'Hamburguesa Doble Carne', imagen: '/img/b6.png', descripcion: 'Doble carne, doble queso, cebolla caramelizada, salsa especial, bebida', precio: 35000 },
-  { id: 7, nombre: 'Hamburguesa Doble Carne', imagen: '/img/b7.jpg', descripcion: 'Doble carne, doble queso, cebolla caramelizada, salsa especial, bebida', precio: 35000 },
-  { id: 8, nombre: 'Hamburguesa Doble Carne', imagen: '/img/b8.png', descripcion: 'Doble carne, doble queso, cebolla caramelizada, salsa especial, bebida', precio: 35000 },
-  { id: 9, nombre: 'Hamburguesa Doble Carne', imagen: '/img/b9.png', descripcion: 'Doble carne, doble queso, cebolla caramelizada, salsa especial, bebida', precio: 35000 },
-  { id: 6, nombre: 'Hamburguesa Doble Carne', imagen: '/img/b10.png', descripcion: 'Doble carne, doble queso, cebolla caramelizada, salsa especial, bebida', precio: 35000 },
-  { id: 7, nombre: 'Hamburguesa Doble Carne', imagen: '/img/b11.jpg', descripcion: 'Doble carne, doble queso, cebolla caramelizada, salsa especial, bebida', precio: 35000 },
-  { id: 8, nombre: 'Hamburguesa Doble Carne', imagen: '/img/b12.png', descripcion: 'Doble carne, doble queso, cebolla caramelizada, salsa especial, bebida', precio: 35000 }
+  { id: 1, nombre: 'Pepsi 390ml', imagen: '/img/b1.png', precio: 6000 },
+  { id: 2, nombre: 'Pony Malta 330ml', imagen: '/img/b2.png',  precio: 3000 },
+  { id: 3, nombre: 'Coca Cola 330ml', imagen: '/img/b3.png',  precio: 3500 },
+  { id: 4, nombre: 'Sprite 330ml', imagen: '/img/b4.png',  precio: 2800 },
+  { id: 5, nombre: 'Uva Postobon 450ml', imagen: '/img/b5.png',precio: 30000 },
+  { id: 6, nombre: 'Colombiana 450ml', imagen: '/img/b6.png',  precio: 35000 },
+  { id: 7, nombre: 'Manzana Postobon 450ml', imagen: '/img/b7.png',  precio: 35000 },
+  { id: 8, nombre: 'Agua Cristal 500ml', imagen: '/img/b8.png', precio: 35000 },
+  { id: 9, nombre: 'Agua Manantial 600ml', imagen: '/img/b9.png', precio: 9000 },
+  { id: 10, nombre: 'Pepsi personal', imagen: '/img/b10.png',  precio: 35000 },
+  { id: 11, nombre: 'Mr tea durazno personal', imagen: '/img/b11.png',  precio: 35000 },
+  { id: 12, nombre: 'Coca Cola personal', imagen: '/img/b12.png',  precio: 35000 },
+
 ])
 
 const adicionales = ref([
-  { nombre: 'Tocineta', cantidad: 0, precio: 4000 },
-  { nombre: 'Lonjas de queso', cantidad: 0, precio: 2500 },
-  { nombre: 'Carne de hamburguesa', cantidad: 0, precio: 9000 },
-  { nombre: 'Pechuga apanada', cantidad: 0, precio: 8000 },
-  { nombre: 'Huevo', cantidad: 0, precio: 1000 },
-  { nombre: 'Vegetales', cantidad: 0, precio: 800 },
+  { nombre: 'Hielo', cantidad: 0, precio: 1500 },
+ 
 ])
 
 function navegarACategoria(ruta) {
