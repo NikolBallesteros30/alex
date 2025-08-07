@@ -272,7 +272,7 @@
             <div class="footer-link">Domicilios corporativos</div>
             <div class="footer-link">Superintendencia de Industria y Comercio</div>
             <div class="footer-link">Certificados</div>
-            <div class="footer-link">Contáctanos - PQRS</div>
+            <div class="footer-link">Contáctanos - BDC</div>
           </div>
 
           <div class="column q-gutter-xs">
@@ -291,8 +291,8 @@
         <div class="footer-text-sm">El gramaje de cada proteína corresponde a su peso en crudo. Todos nuestros precios incluyen impuestos.</div>
         <div class="footer-text-sm">Fotos de referencia publicitaria. Sujeto a disponibilidad y cobertura del punto de venta.</div>
         <div class="footer-text-sm q-mt-sm">notifica@alimentosalconsumidor.com</div>
-        <div class="footer-text-md q-mt-md">Copyright © El Corral. Todos los derechos reservados.</div>
-        <div class="footer-text-md q-mt-sm">Desarrollado por <strong>TRD</strong></div>
+        <div class="footer-text-md q-mt-md">Copyright © BDC. Todos los derechos reservados.</div>
+        <div class="footer-text-md q-mt-sm">Desarrollado por <strong>BDC</strong></div>
       </div>
     </footer>
   </div>
