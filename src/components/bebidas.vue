@@ -198,14 +198,14 @@ const promociones = ref([
   { id: 2, nombre: 'Pony Malta 330ml', imagen: '/img/b2.png',  precio: 3000 },
   { id: 3, nombre: 'Coca Cola 330ml', imagen: '/img/b3.png',  precio: 3500 },
   { id: 4, nombre: 'Sprite 330ml', imagen: '/img/b4.png',  precio: 2800 },
-  { id: 5, nombre: 'Uva Postobon 450ml', imagen: '/img/b5.png',precio: 30000 },
-  { id: 6, nombre: 'Colombiana 450ml', imagen: '/img/b6.png',  precio: 35000 },
-  { id: 7, nombre: 'Manzana Postobon 450ml', imagen: '/img/b7.png',  precio: 35000 },
-  { id: 8, nombre: 'Agua Cristal 500ml', imagen: '/img/b8.png', precio: 35000 },
+  { id: 5, nombre: 'Uva Postobon 450ml', imagen: '/img/b5.png',precio: 5000 },
+  { id: 6, nombre: 'Colombiana 450ml', imagen: '/img/b6.png',  precio: 5000 },
+  { id: 7, nombre: 'Manzana Postobon 450ml', imagen: '/img/b7.png',  precio: 5500 },
+  { id: 8, nombre: 'Agua Cristal 500ml', imagen: '/img/b8.png', precio: 5500 },
   { id: 9, nombre: 'Agua Manantial 600ml', imagen: '/img/b9.png', precio: 9000 },
-  { id: 10, nombre: 'Pepsi personal', imagen: '/img/b10.png',  precio: 35000 },
-  { id: 11, nombre: 'Mr tea durazno personal', imagen: '/img/b11.png',  precio: 35000 },
-  { id: 12, nombre: 'Coca Cola personal', imagen: '/img/b12.png',  precio: 35000 },
+  { id: 10, nombre: 'Pepsi personal', imagen: '/img/b10.png',  precio: 3500 },
+  { id: 11, nombre: 'Mr tea durazno personal', imagen: '/img/b11.png',  precio: 3500 },
+  { id: 12, nombre: 'Coca Cola personal', imagen: '/img/b12.png',  precio: 3500 },
 
 ])
 
@@ -590,4 +590,5 @@ function formatPrecio(valor) {
     opacity: 1;
   }
 }
+
 </style>
