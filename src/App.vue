@@ -8,59 +8,29 @@
           <!-- Logo -->
           <div class="row items-center q-gutter-md">
             <q-toolbar-title class="cursor-pointer" @click="$router.push('/')">
-              <img 
-                src="/img/logo.png" 
-                alt="Logo Roll & Go" 
-                :style="logoStyle"
-              />
+              <img src="/img/logo.png" alt="Logo Roll & Go" :style="logoStyle" />
             </q-toolbar-title>
 
             <!-- Botones de navegación -->
             <div class="gt-sm">
-              <q-btn
-                flat
-                label="Ir al menú"
-                class="text-white header-btn q-mr-md"
-                @click="irAMenu"
-              />
-              <q-btn flat label="Restaurantes" class="text-white header-btn" />
+              <q-btn flat label="Ir al menú" class="text-white header-btn q-mr-md" @click="irAMenu" />
+             
+
             </div>
-            
+
             <!-- Botón "Ir al menú" para móvil -->
             <div class="lt-md">
-              <q-btn
-                flat
-                :label="$q.screen.xs ? 'Menú' : 'Ir al menú'"
-                class="text-white header-btn"
-                @click="irAMenu"
-              />
+              <q-btn flat :label="$q.screen.xs ? 'Menú' : 'Ir al menú'" class="text-white header-btn"
+                @click="irAMenu" />
             </div>
           </div>
 
           <!-- Buscador -->
-          <q-input
-            v-model="search"
-            rounded
-            dense
-            outlined
-            debounce="300"
-            placeholder="Buscar"
-            class="search-bar bg-white text-dark"
-            :style="searchBarStyle"
-            @keyup.enter="realizarBusqueda"
-          >
+          <q-input v-model="search" rounded dense outlined debounce="300" placeholder="Buscar"
+            class="search-bar bg-white text-dark" :style="searchBarStyle" @keyup.enter="realizarBusqueda">
+
             <template #prepend>
-              <q-icon name="search" color="grey-6" />
-            </template>
-            <template #append>
-              <q-btn
-                flat
-                round
-                dense
-                icon="search"
-                @click="realizarBusqueda"
-                color="primary"
-              />
+              <q-btn flat round dense icon="search" @click="realizarBusqueda" color="red-8" />
             </template>
           </q-input>
 
@@ -68,7 +38,9 @@
           <div class="row items-center q-gutter-sm">
             <q-btn flat dense class="text-white header-lang-btn">
               <q-avatar :size="avatarSize" class="q-mr-xs">
-                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjRkZEQjAwIi8+CjxyZWN0IHk9IjgiIHdpZHRoPSIyNCIgaGVpZ2h0PSI4IiBmaWxsPSIjMDA3M0ZGIi8+CjxyZWN0IHk9IjE2IiB3aWR0aD0iMjQiIGhlaWdodD0iOCIgZmlsbD0iI0ZGMDAwMCIvPgo8L3N2Zz4K" alt="Colombia flag">
+                <img
+                  src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjRkZEQjAwIi8+CjxyZWN0IHk9IjgiIHdpZHRoPSIyNCIgaGVpZ2h0PSI4IiBmaWxsPSIjMDA3M0ZGIi8+CjxyZWN0IHk9IjE2IiB3aWR0aD0iMjQiIGhlaWdodD0iOCIgZmlsbD0iI0ZGMDAwMCIvPgo8L3N2Zz4K"
+                  alt="Colombia flag">
               </q-avatar>
               <span :class="{ 'gt-xs': $q.screen.xs }">ES</span>
               <q-icon name="expand_more" :size="iconSize" class="q-ml-xs" />
@@ -80,18 +52,13 @@
       <!-- Fila inferior -->
       <div class="bg-cream text-dark flex items-center justify-center" :style="bottomBarHeight">
         <div class="q-px-md row items-center justify-start q-gutter-md" style="max-width: 1200px; width: 100%;">
-          <q-btn 
-            flat 
-            icon="login" 
-            :label="$q.screen.gt.xs ? 'Inicia tu orden' : ''" 
-            class="text-dark bottom-bar-btn" 
-          />
-          <q-btn 
-            flat 
-            icon="local_shipping" 
-            :label="$q.screen.gt.xs ? 'Domicilio' : ''" 
-            class="text-dark bottom-bar-btn" 
-          />
+          <!-- Botón inicia tu orden -->
+          <q-btn flat icon="login" :label="$q.screen.gt.xs ? 'Inicia tu orden' : ''" class="text-dark bottom-bar-btn"
+            @click="scrollToPromociones" />
+
+          <!-- Botón domicilio -->
+          <q-btn flat icon="local_shipping" :label="$q.screen.gt.xs ? 'Domicilio' : ''" class="text-dark bottom-bar-btn"
+            @click="abrirWhatsApp" />
         </div>
       </div>
     </q-header>
@@ -134,11 +101,31 @@
         </q-card-actions>
       </q-card>
     </q-dialog>
+
+    <!-- Modal de iniciar pedido -->
+    <q-dialog v-model="mostrarFormulario">
+      <q-card style="min-width: 350px">
+        <q-card-section>
+          <div class="text-h6">Inicia tu orden</div>
+        </q-card-section>
+
+        <q-card-section>
+          <q-input v-model="formPedido.nombre" label="Tu nombre" filled />
+          <q-input v-model="formPedido.producto" label="Producto" filled />
+          <q-input v-model="formPedido.cantidad" type="number" label="Cantidad" filled />
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Cancelar" color="negative" v-close-popup />
+          <q-btn color="primary" label="Enviar" @click="enviarPedido" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </q-layout>
 </template>
 
 <script setup>
-import { ref, reactive, provide, computed } from 'vue'
+import { ref, reactive, provide, computed, inject } from 'vue'
 import { useQuasar } from 'quasar'
 import { useRouter } from 'vue-router'
 
@@ -147,7 +134,7 @@ const router = useRouter()
 const search = ref('')
 const mostrarCarrito = ref(false)
 
-import { inject } from 'vue'
+
 const carrito = inject('carrito')
 
 // Computed properties para estilos responsivos
@@ -204,6 +191,7 @@ function irAMenu() {
   }
 }
 
+ 
 function formatPrecio(valor) {
   return `$${valor.toLocaleString('es-CO')}`
 }
@@ -216,7 +204,23 @@ function realizarBusqueda() {
     })
   }
 }
+
+function scrollToPromociones() {
+  const el = document.getElementById('promociones')
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+}
+
+
+// 👉 nuevo: abrir WhatsApp
+function abrirWhatsApp() {
+  const telefono = '3123866406'
+  const mensaje = encodeURIComponent('Hola, quiero pedir a domicilio 🚚')
+  window.open(`https://wa.me/${telefono}?text=${mensaje}`, '_blank')
+}
 </script>
+
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Open+Sans:wght@400;600;700&display=swap');
@@ -224,9 +228,11 @@ function realizarBusqueda() {
 .bg-burgundy {
   background-color: #4b0b0b;
 }
+
 .bg-cream {
   background-color: #fff1d6;
 }
+
 .bg-red {
   background-color: #ff5c5c;
 }
@@ -286,11 +292,13 @@ function realizarBusqueda() {
 
 /* Responsive adjustments */
 @media (max-width: 599px) {
-  .header-btn, .header-lang-btn {
+
+  .header-btn,
+  .header-lang-btn {
     font-size: 12px;
     padding: 4px 8px;
   }
-  
+
   .bottom-bar-btn {
     font-size: 12px;
     min-width: 60px;
@@ -298,7 +306,9 @@ function realizarBusqueda() {
 }
 
 @media (min-width: 600px) and (max-width: 1023px) {
-  .header-btn, .header-lang-btn {
+
+  .header-btn,
+  .header-lang-btn {
     font-size: 13px;
   }
 }
