@@ -12,6 +12,8 @@
     "@maxle5/mdi-vue3": "^1.0.1",
     "@quasar/extras": "^1.17.0",
     "@quasar/vite-plugin": "^1.10.0",
+    "html2pdf.js": "^0.10.3",
+    "jspdf": "^3.0.2",
     "mdi-vue3": "^7.4.47",
     "quasar": "^2.18.2",
     "sass": "^1.89.2",
@@ -22,4 +24,5 @@
     "@vitejs/plugin-vue": "^6.0.0",
     "sass-embedded": "^1.89.2",
     "vite": "^7.0.4"
-  }}
+  }
+}
