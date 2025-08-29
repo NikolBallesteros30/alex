@@ -125,7 +125,7 @@
       </q-card>
     </q-dialog>
 
-    <!-- MODAL DE CARRITO -->
+    <!-- MODAL DE CARRITO MEJORADO -->
     <q-dialog v-model="carritoAbierto" persistent transition-show="fade" transition-hide="fade">
       <q-card class="modal-carrito" :class="carritoModalClase">
         <q-card-section>
@@ -162,10 +162,66 @@
 
             <q-separator class="q-my-sm" />
           </div>
+
+          <!-- Total del carrito -->
+          <div v-if="carrito.items.length > 0" class="text-h6 text-right q-mt-md text-primary">
+            Total: {{ formatPrecio(totalCarrito) }}
+          </div>
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn flat label="Cerrar" class="btn-cerrar-carrito" @click="carritoAbierto = false" />
+  <q-btn flat label="Cerrar" class="btn-cerrar-carrito" @click="carritoAbierto = false" />
+  <q-btn v-if="carrito.items.length > 0" label="Siguiente" class="btn-siguiente" @click="abrirModalDatosCliente" />
+</q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <!-- MODAL DE DATOS DEL CLIENTE -->
+    <q-dialog v-model="modalDatosClienteAbierto" persistent transition-show="scale" transition-hide="scale">
+      <q-card class="modal-datos-cliente" :class="carritoModalClase">
+        <q-card-section class="row items-center justify-between modal-header">
+          <div class="text-h6">Datos para la factura</div>
+          <q-btn icon="close" flat round dense @click="modalDatosClienteAbierto = false" />
+        </q-card-section>
+
+        <q-card-section>
+          <!-- Formulario de datos del cliente -->
+          <div class="q-gutter-md">
+            <q-input filled v-model="datosCliente.nombre" label="Nombre *" lazy-rules
+              :rules="[val => val && val.length > 0 || 'Por favor ingresa tu nombre']" />
+
+            <q-input filled v-model="datosCliente.apellido" label="Apellido *" lazy-rules
+              :rules="[val => val && val.length > 0 || 'Por favor ingresa tu apellido']" />
+
+            <q-input filled v-model="datosCliente.telefono" label="Teléfono *" mask="(###) ### - ####" lazy-rules
+              :rules="[val => val && val.length > 0 || 'Por favor ingresa tu teléfono']" />
+
+            <q-input filled v-model="datosCliente.direccion" label="Dirección de entrega" />
+          </div>
+
+          <!-- Resumen del pedido -->
+          <div class="q-mt-lg">
+            <div class="text-subtitle1 text-weight-bold q-mb-sm">Resumen de tu pedido:</div>
+            <q-separator class="q-mb-sm" />
+
+            <div v-for="(item, i) in carrito.items" :key="i" class="q-mb-xs">
+              <div class="row justify-between">
+                <span>{{ item.nombre }}</span>
+                <span>{{ formatPrecio(item.total) }}</span>
+              </div>
+            </div>
+
+            <q-separator class="q-my-sm" />
+            <div class="row justify-between text-h6 text-primary">
+              <span>Total:</span>
+              <span>{{ formatPrecio(totalCarrito) }}</span>
+            </div>
+          </div>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Atrás" @click="modalDatosClienteAbierto = false; carritoAbierto = true" />
+          <q-btn label="Confirmar y descargar factura" color="primary" @click="generarFactura" />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -177,92 +233,95 @@
         :label="carrito.items.length" />
     </q-btn>
 
-    <!-- FOOTER ESTILO BDC MEJORADO -->
-    <footer class="footer-elcorral" :class="footerPadding">
-      <div class="footer-contenido q-py-xl">
+<!-- FOOTER ESTILO BDC MEJORADO -->
+        <footer class="footer-bdc">
+            <div class="footer-contenido q-py-xl">
+                <!-- Sección principal del footer -->
+                <div class="row q-col-gutter-lg">
+                    <!-- Logo y redes sociales -->
+                   <div class="col-12 col-md-3 column items-center items-md-start q-gutter-md self-start">
+        <img src="/img/logo.png" alt="Logo BDC" class="footer-logo" :class="footerLogoClase" />
+                        <!-- Síguenos -->
+                        <div id="redes-sociales" class="column q-gutter-sm">
+                            <div class="footer-titulo">Contáctanos</div>
+                            <div class="row q-gutter-sm">
+                                <a href="https://wa.me/573123866406?text=Hola%2C%20me%20gustar%C3%ADa%20m%C3%A1s%20informaci%C3%B3n" target="_blank">
+                                    <i class="mdi mdi-whatsapp" style="font-size: 24px; color: #25d366; cursor: pointer;"></i>
+                                </a>
+                                <i class="mdi mdi-facebook" style="font-size: 24px; color: #1877f2; cursor: pointer;"></i>
+                                <i class="mdi mdi-instagram" style="font-size: 24px; color: #e4405f; cursor: pointer;"></i>
+                            </div>
+                            <div class="footer-link q-mt-sm">
+                                notifica@alimentosalconsumidor.com
+                            </div>
+                        </div>
+                    </div>
 
-        <!-- Sección principal del footer -->
-        <div class="row q-col-gutter-lg">
+                    <!-- Donde puedes ubicarnos -->
+                    <div class="col-12 col-md-3">
+                        <div class="column q-gutter-sm text-white">
+                            <div class="footer-titulo">Donde puedes Ubicarnos?</div>
+                            <div class="footer-link cursor-pointer">Bucaramanga</div>
+                            <div class="footer-link cursor-pointer">Medellín</div>
+                            <div class="footer-link cursor-pointer">Armenia</div>
+                            <div class="footer-link cursor-pointer">Cali</div>
+                        </div>
+                    </div>
 
-          <!-- Logo y contacto -->
-          <div class="col-12 col-md-4 column items-center items-md-start q-gutter-md">
-            <img src="/img/logo.png" alt="Logo BDC" class="footer-logo" :class="footerLogoClase" />
+                    <!-- Información Legal -->
+                    <div class="col-12 col-md-3">
+                        <div class="column q-gutter-sm text-white">
+                            <div class="footer-titulo">Información Legal</div>
+                            <div class="footer-link cursor-pointer">Política de tratamiento de datos</div>
+                            <div class="footer-link cursor-pointer">Autorización de tratamiento</div>
+                            <div class="footer-link cursor-pointer">Términos y condiciones</div>
+                            <div class="footer-link cursor-pointer">Términos de campañas</div>
+                            <div class="footer-link cursor-pointer">Gestión de cookies</div>
+                        </div>
+                    </div>
 
-            <!-- Redes sociales y contacto -->
-            <div class="column q-gutter-sm">
-              <div class="footer-titulo" :class="footerTituloClase">Síguenos</div>
-              <div class="row q-gutter-sm">
-                <a :href="`https://wa.me/573123866406?text=${encodeURIComponent('Hola, me gustaría más información')}`"
-                  target="_blank">
-                  <q-icon name="mdi-whatsapp" :size="footerIconSize" class="cursor-pointer text-green-5" />
-                </a>
-                <q-icon name="mdi-facebook" :size="footerIconSize" class="cursor-pointer text-blue-5" />
-                <q-icon name="mdi-instagram" :size="footerIconSize" class="cursor-pointer" />
-              </div>
-              <div class="footer-link q-mt-sm" :class="footerLinkClase">
-                notifica@alimentosalconsumidor.com
-              </div>
+                    <!-- Sobre BDC -->
+                    <div class="col-12 col-md-3">
+                        <div class="column q-gutter-sm text-white">
+                            <div class="footer-titulo">Sobre BDC</div>
+                            <div class="footer-link cursor-pointer">Quiénes somos</div>
+                            <div class="footer-link cursor-pointer">Sostenibilidad</div>
+                            <div class="footer-link cursor-pointer">Domicilios corporativos</div>
+                            <div class="footer-link cursor-pointer">Superintendencia de Industria y Comercio</div>
+                            <div class="footer-link cursor-pointer">Certificados</div>
+                            <div class="footer-link cursor-pointer">Contáctanos</div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
 
-          <!-- Información corporativa -->
-          <div class="col-12 col-md-4">
-            <div class="column q-gutter-sm text-white" :class="footerLinksClase">
-              <div class="footer-titulo" :class="footerTituloClase">Sobre BDC</div>
-              <div class="footer-link cursor-pointer" :class="footerLinkClase">Quiénes somos</div>
-              <div class="footer-link cursor-pointer" :class="footerLinkClase">Sostenibilidad</div>
-              <div class="footer-link cursor-pointer" :class="footerLinkClase">Domicilios corporativos</div>
-              <div class="footer-link cursor-pointer" :class="footerLinkClase">Superintendencia de Industria y Comercio
-              </div>
-              <div class="footer-link cursor-pointer" :class="footerLinkClase">Certificados</div>
-              <div class="footer-link cursor-pointer" :class="footerLinkClase">Contáctanos</div>
+            <!-- Separador visual -->
+            <div style="height: 1px; background-color: rgba(255, 255, 255, 0.2); margin: 20px 0;"></div>
+
+            <!-- Pie de página con información adicional -->
+            <div class="footer-bottom text-center q-py-md">
+                <!-- Información del producto -->
+                <div class="q-mb-sm">
+                    <div class="footer-text-sm">
+                        El gramaje de cada proteína corresponde a su peso en crudo.
+                        Todos nuestros precios incluyen impuestos.
+                    </div>
+                    <div class="footer-text-sm">
+                        Fotos de referencia publicitaria. Sujeto a disponibilidad y cobertura del punto de venta.
+                    </div>
+                </div>
+
+                <!-- Copyright y créditos -->
+                <div class="q-mt-md">
+                    <div class="footer-text-md">
+                        Copyright © 2025 BDC. Todos los derechos reservados.
+                    </div>
+                    <div class="footer-text-md q-mt-xs">
+                        Desarrollado por <strong>BDC</strong>
+                    </div>
+                </div>
             </div>
-          </div>
-
-          <!-- Información legal -->
-          <div class="col-12 col-md-4">
-            <div class="column q-gutter-sm text-white" :class="footerLinksClase">
-              <div class="footer-titulo" :class="footerTituloClase">Información Legal</div>
-              <div class="footer-link cursor-pointer" :class="footerLinkClase">Política de tratamiento de datos</div>
-              <div class="footer-link cursor-pointer" :class="footerLinkClase">Autorización de tratamiento</div>
-              <div class="footer-link cursor-pointer" :class="footerLinkClase">Términos y condiciones</div>
-              <div class="footer-link cursor-pointer" :class="footerLinkClase">Términos de campañas</div>
-              <div class="footer-link cursor-pointer" :class="footerLinkClase">Gestión de cookies</div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- Separador visual -->
-      <q-separator color="white opacity-20" />
-
-      <!-- Pie de página con información adicional -->
-      <div class="footer-bottom text-center q-py-md">
-
-        <!-- Información del producto -->
-        <div class="q-mb-sm">
-          <div class="footer-text-sm" :class="footerTextoSmClase">
-            El gramaje de cada proteína corresponde a su peso en crudo.
-            Todos nuestros precios incluyen impuestos.
-          </div>
-          <div class="footer-text-sm" :class="footerTextoSmClase">
-            Fotos de referencia publicitaria. Sujeto a disponibilidad y cobertura del punto de venta.
-          </div>
-        </div>
-
-        <!-- Copyright y créditos -->
-        <div class="q-mt-md">
-          <div class="footer-text-md" :class="footerTextoMdClase">
-            Copyright © {{ new Date().getFullYear() }} BDC. Todos los derechos reservados.
-          </div>
-          <div class="footer-text-md q-mt-xs" :class="footerTextoMdClase">
-            Desarrollado por <strong>BDC</strong>
-          </div>
-        </div>
-
-      </div>
-    </footer>
+        </footer>
   </div>
 </template>
 
@@ -270,6 +329,7 @@
 import { ref, inject, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
+import jsPDF from 'jspdf'
 
 const $q = useQuasar()
 const router = useRouter()
@@ -317,6 +377,20 @@ const promocionSeleccionada = ref(null)
 const especificaciones = ref('')
 const carritoAbierto = ref(false)
 const editandoIndex = ref(null)
+
+// Nuevas variables para el flujo mejorado
+const modalDatosClienteAbierto = ref(false)
+const datosCliente = ref({
+  nombre: '',
+  apellido: '',
+  telefono: '',
+  direccion: ''
+})
+
+// Computed para el total del carrito
+const totalCarrito = computed(() => {
+  return carrito.items.reduce((total, item) => total + item.total, 0)
+})
 
 // Computed properties para responsividad
 const carruselHeight = computed(() => {
@@ -612,6 +686,127 @@ function precioTotal() {
 
 function formatPrecio(valor) {
   return `$${valor.toLocaleString('es-CO')}`
+}
+
+// Función para abrir el modal de datos del cliente
+function abrirModalDatosCliente() {
+  carritoAbierto.value = false
+  modalDatosClienteAbierto.value = true
+}
+
+// Función para generar la factura en PDF
+function generarFactura() {
+  // Validar datos del cliente
+  if (!datosCliente.value.nombre || !datosCliente.value.apellido || !datosCliente.value.telefono) {
+    $q.notify({
+      type: 'negative',
+      message: 'Por favor completa todos los campos obligatorios'
+    })
+    return
+  }
+
+  try {
+    // Crear PDF
+    const doc = new jsPDF()
+
+    // Encabezado de la factura
+    doc.setFontSize(20)
+    doc.setTextColor(96, 0, 0) // Color vino tinto
+    doc.text('RESTAURANTE BDC', 105, 20, { align: 'center' })
+
+    doc.setFontSize(12)
+    doc.setTextColor(0, 0, 0)
+    doc.text('NIT: 900.123.456-7', 105, 30, { align: 'center' })
+    doc.text('Teléfono: (601) 123-4567', 105, 37, { align: 'center' })
+
+    // Línea separadora
+    doc.line(20, 45, 190, 45)
+
+    // Información del cliente
+    doc.setFontSize(14)
+    doc.text('DATOS DEL CLIENTE', 20, 55)
+
+    doc.setFontSize(12)
+    doc.text(`Nombre: ${datosCliente.value.nombre} ${datosCliente.value.apellido}`, 20, 65)
+    doc.text(`Teléfono: ${datosCliente.value.telefono}`, 20, 72)
+
+    if (datosCliente.value.direccion) {
+      doc.text(`Dirección: ${datosCliente.value.direccion}`, 20, 79)
+    }
+
+    // Detalles del pedido
+    doc.setFontSize(14)
+    doc.text('DETALLES DEL PEDIDO', 20, 95)
+
+    doc.setFontSize(12)
+    let yPosition = 105
+
+    carrito.items.forEach((item, index) => {
+      // Verificar si necesitamos una nueva página
+      if (yPosition > 250) {
+        doc.addPage()
+        yPosition = 20
+      }
+
+      doc.text(`${index + 1}. ${item.nombre}`, 20, yPosition)
+      doc.text(formatPrecio(item.total), 180, yPosition, { align: 'right' })
+      yPosition += 7
+
+      // Adicionales
+      if (item.adicionales && item.adicionales.length > 0) {
+        item.adicionales.forEach(adicional => {
+          if (adicional.cantidad > 0) {
+            doc.text(`   - ${adicional.nombre} x${adicional.cantidad}`, 25, yPosition)
+            doc.text(`+${formatPrecio(adicional.precio * adicional.cantidad)}`, 180, yPosition, { align: 'right' })
+            yPosition += 7
+          }
+        })
+      }
+
+      // Especificaciones
+      if (item.especificaciones) {
+        doc.setFontSize(10)
+        doc.text(`   Nota: ${item.especificaciones}`, 25, yPosition)
+        doc.setFontSize(12)
+        yPosition += 7
+      }
+
+      yPosition += 3 // Espacio entre productos
+    })
+
+    // Total
+    doc.setFontSize(14)
+    doc.text('TOTAL:', 20, yPosition + 10)
+    doc.text(formatPrecio(totalCarrito.value), 180, yPosition + 10, { align: 'right' })
+
+    // Pie de página
+    doc.setFontSize(10)
+    doc.setTextColor(100, 100, 100)
+    doc.text('¡Gracias por su compra!', 105, 280, { align: 'center' })
+    doc.text(`Fecha: ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`, 105, 285, { align: 'center' })
+
+    // Guardar el PDF
+    const nombreArchivo = `factura_${datosCliente.value.nombre}_${Date.now()}.pdf`
+    doc.save(nombreArchivo)
+
+    // Mostrar mensaje de éxito
+    $q.notify({
+      type: 'positive',
+      message: 'Factura generada con éxito'
+    })
+
+    // Cerrar modal y limpiar carrito
+    modalDatosClienteAbierto.value = false
+    carrito.items = []
+
+  } catch (error) {
+    console.error('Error al generar la factura:', error)
+    $q.notify({
+      type: 'negative',
+      message: 'Error al generar la factura'
+    })
+  }
+
 }
 </script>
 
@@ -1065,8 +1260,29 @@ function formatPrecio(valor) {
   transition: color 0.3s ease;
 }
 
+.btn-siguiente {
+  color: #006002;
+  border: none;
+  font-weight: bold;
+  margin-top: 20px;
+  text-align: right;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
 .btn-cerrar-carrito:hover {
   color: #a00000;
+}
+
+
+.btn-siguiente:hover {
+  color: rgb(0, 109, 67);
+}
+
+.q-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px; 
 }
 
 @keyframes fadeInModal {
@@ -1081,16 +1297,45 @@ function formatPrecio(valor) {
   }
 }
 
+/* MODAL DE DATOS DEL CLIENTE */
+.modal-datos-cliente {
+  min-width: 400px;
+  max-width: 600px;
+  width: 100%;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  animation: fadeInModal 0.3s ease;
+}
+
+.modal-datos-cliente .modal-header {
+  background: linear-gradient(135deg, #f8f8f8, #eeeeee);
+  border-bottom: 1px solid #e0e0e0;
+  padding: 16px;
+}
+
+.modal-datos-cliente .q-card__section {
+  padding: 20px;
+}
+
+/* Ajustes responsivos */
+@media (max-width: 600px) {
+  .modal-datos-cliente {
+    min-width: 90vw;
+    max-width: 95vw;
+  }
+}
+
 /* FOOTER */
-.footer-elcorral {
+.footer-bdc{
   background-color: #430000;
   color: #fff;
   padding: 60px 80px 30px;
-  font-family: 'Open Sans', sans-serif;
+  font-family: system-ui;
 }
 
 .footer-logo {
-  width: 540px;
+  width: 200px;
   margin-bottom: 16px;
 }
 
@@ -1109,7 +1354,7 @@ function formatPrecio(valor) {
 }
 
 .footer-titulo-xs {
-  font-size: 14px;
+  font-size: 18px;
 }
 
 .footer-link {
@@ -1117,6 +1362,7 @@ function formatPrecio(valor) {
   color: #fff;
   cursor: pointer;
   transition: color 0.3s ease;
+    text-decoration: none;
 }
 
 .footer-link-xs {
@@ -1147,6 +1393,15 @@ function formatPrecio(valor) {
 
 .footer-text-md-xs {
   font-size: 12px;
+}
+@media (max-width: 1023px) {
+   .footer-bdc {
+    padding: 40px 20px 20px;
+  }
+  
+  .footer-logo {
+    width: 150px;
+  }
 }
 
 /* WhatsApp Footer Button */
@@ -1195,8 +1450,11 @@ function formatPrecio(valor) {
   .promociones-container {
     padding: 30px 16px;
   }
-
-  .footer-elcorral {
+  
+.footer-logo {
+    width: 120px;}
+    
+  .footer-bdc {
     padding: 30px 16px 20px;
   }
 
@@ -1219,8 +1477,15 @@ function formatPrecio(valor) {
     padding: 45px 32px;
   }
 
-  .footer-elcorral {
+  .footer-bdc {
     padding: 45px 32px 25px;
   }
+  .footer-bdc .row > [class*="col-"] {
+  align-self: flex-start !important;
+}
+
+.footer-bdc .row {
+  align-items: flex-start !important;
+}
 }
 </style>
