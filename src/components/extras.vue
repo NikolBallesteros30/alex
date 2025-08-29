@@ -543,6 +543,8 @@ function formatPrecio(valor) {
   color: #444;
 }
 
+
+
 .btn-cerrar-carrito {
   color: #600000;
   font-weight: bold;
@@ -555,6 +557,7 @@ function formatPrecio(valor) {
 .btn-cerrar-carrito:hover {
   color: #a00000;
 }
+
 
 /* Responsive */
 @media (max-width: 768px) {
